@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from flask_jwt_extended import get_jwt_identity
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 from app.extensions import db
 from app.models.worksheet import WorkSheet
@@ -79,7 +79,7 @@ def submit_worksheet():
 
     worksheet.note = data.get("note")
     worksheet.status = "SUBMITTED"
-    worksheet.submitted_at = datetime.now()
+    worksheet.submitted_at = datetime.now(timezone.utc)
     worksheet.review_status = "PENDING"
     worksheet.total_minutes = my_work_minutes + worker_work_minutes
 

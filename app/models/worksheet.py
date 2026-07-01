@@ -10,10 +10,10 @@ class WorkSheet(db.Model):
     total_minutes = db.Column(db.Integer, default=0)
     note = db.Column(db.Text)
     status = db.Column(db.String(30), default="DRAFT")
-    submitted_at = db.Column(db.DateTime)
+    submitted_at = db.Column(db.DateTime(timezone=True))
     reviewed_by = db.Column(db.Integer, db.ForeignKey("users.id"))
     review_status = db.Column(db.String(30), default="PENDING")
     review_comment = db.Column(db.Text)
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
 
     employee = db.relationship("User", foreign_keys=[employee_id])

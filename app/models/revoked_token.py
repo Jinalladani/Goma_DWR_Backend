@@ -8,5 +8,5 @@ class RevokedToken(db.Model):
     jti = db.Column(db.String(36), unique=True, nullable=False, index=True)
     token_type = db.Column(db.String(20), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
-    expires_at = db.Column(db.DateTime, nullable=False)
-    revoked_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
+    expires_at = db.Column(db.DateTime(timezone=True), nullable=False)
+    revoked_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now(), nullable=False)

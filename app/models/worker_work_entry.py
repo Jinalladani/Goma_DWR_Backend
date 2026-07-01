@@ -28,13 +28,13 @@ class WorkerWorkEntry(db.Model):
     work_type = db.Column(db.String(80), nullable=False)
     task_title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text)
-    start_time = db.Column(db.DateTime, nullable=False)
-    end_time = db.Column(db.DateTime, nullable=False)
+    start_time = db.Column(db.DateTime(timezone=True), nullable=False)
+    end_time = db.Column(db.DateTime(timezone=True), nullable=False)
     total_minutes = db.Column(db.Integer, default=0)
     status = db.Column(db.String(30), default="DRAFT")
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
     updated_at = db.Column(
-        db.DateTime,
+        db.DateTime(timezone=True),
         server_default=db.func.now(),
         onupdate=db.func.now()
     )

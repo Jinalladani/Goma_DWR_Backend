@@ -1,4 +1,4 @@
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timezone
 
 from flask import Blueprint, request
 from flask_jwt_extended import get_jwt_identity
@@ -421,14 +421,21 @@ def _parse_entry_payload(data, partial=False, current_entry=None):
 
 def _parse_datetime_or_time(value, work_date):
     try:
+        dt = None
         if "T" in value:
-            return datetime.fromisoformat(value)
-
-        if len(value) == 5:
+            dt = datetime.fromisoformat(value)
+        elif len(value) == 5:
             hour, minute = map(int, value.split(":"))
-            return datetime.combine(work_date, time(hour=hour, minute=minute))
+            dt = datetime.combine(work_date, time(hour=hour, minute=minute), tzinfo=timezone.utc)
+        else:
+            dt = datetime.fromisoformat(value)
 
-        return datetime.fromisoformat(value)
+        if dt is not None:
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            else:
+                dt = dt.astimezone(timezone.utc)
+        return dt
     except (TypeError, ValueError):
         return None
 

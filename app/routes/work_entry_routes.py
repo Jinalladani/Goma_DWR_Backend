@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 
 from flask import Blueprint, request
 from flask_jwt_extended import get_jwt_identity
@@ -112,7 +112,7 @@ def start_work():
         employee_id=user_id,
         project_id=project_id,
         task_title=task_title,
-        start_time=datetime.now(),
+        start_time=datetime.now(timezone.utc),
         status="RUNNING"
     )
 
@@ -142,7 +142,7 @@ def stop_work(entry_id):
     if entry.status != "RUNNING":
         return {"success": False, "message": "Entry already stopped"}, 409
 
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
     total_minutes = int((now - entry.start_time).total_seconds() / 60)
 
     entry.stop_time = now

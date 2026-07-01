@@ -43,6 +43,6 @@ class Project(db.Model):
     )
 
     created_at = db.Column(
-        db.DateTime,
+        db.DateTime(timezone=True),
         server_default=db.func.now()
     )

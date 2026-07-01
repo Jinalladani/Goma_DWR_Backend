@@ -1,6 +1,6 @@
 import hashlib
 import secrets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from flask import Blueprint, request
 from flask_jwt_extended import (
@@ -225,7 +225,7 @@ def request_password_reset():
 
     reset_token = secrets.token_urlsafe(32)
     user.reset_password_token_hash = hash_reset_token(reset_token)
-    user.reset_password_expires_at = datetime.utcnow() + timedelta(minutes=15)
+    user.reset_password_expires_at = datetime.now(timezone.utc) + timedelta(minutes=15)
 
     db.session.commit()
 
@@ -282,7 +282,7 @@ def reset_forgotten_password():
             "message": "Invalid or expired reset token"
         }, 400
 
-    if user.reset_password_expires_at < datetime.utcnow():
+    if user.reset_password_expires_at < datetime.now(timezone.utc):
         user.reset_password_token_hash = None
         user.reset_password_expires_at = None
         db.session.commit()
@@ -351,6 +351,6 @@ def revoke_token(payload):
             jti=payload["jti"],
             token_type=payload["type"],
             user_id=int(payload["sub"]),
-            expires_at=datetime.utcfromtimestamp(payload["exp"])
+            expires_at=datetime.fromtimestamp(payload["exp"], tz=timezone.utc)
         )
     )

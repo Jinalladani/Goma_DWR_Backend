@@ -23,9 +23,9 @@ class User(db.Model):
 
     reset_password_token_hash = db.Column(db.Text)
 
-    reset_password_expires_at = db.Column(db.DateTime)
+    reset_password_expires_at = db.Column(db.DateTime(timezone=True))
 
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
 
     role = db.relationship("Role", backref="users", foreign_keys=[role_id])
 
