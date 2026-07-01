@@ -31,7 +31,7 @@ def create_app():
     CORS(
         app,
         resources={r"/*": {"origins": [
-            "https://goma-dwr-frontend.onrender.com",
+            "https://goma-dwr-app.onrender.com",
             "http://localhost:5173",
         ]}},
         supports_credentials=True,
