@@ -27,7 +27,14 @@ def create_app():
 
     bcrypt.init_app(app)
 
-    cors.init_app(app)
+    cors.init_app(
+        app,
+        resources={r"/*": {"origins": [
+            "https://goma-dwr-frontend.onrender.com",
+            "http://localhost:5173"
+        ]}},
+        supports_credentials=True
+    )
 
     from app.routes.auth_routes import auth_bp
     from app.routes.test_routes import test_bp
