@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from app.config.config import Config
 
@@ -27,13 +28,15 @@ def create_app():
 
     bcrypt.init_app(app)
 
-    cors.init_app(
+    CORS(
         app,
         resources={r"/*": {"origins": [
-            "https://goma-dwr-frontend.onrender.com/api",
-            "http://localhost:5173/api",
+            "https://goma-dwr-frontend.onrender.com",
+            "http://localhost:5173"
         ]}},
-        supports_credentials=True
+        supports_credentials=True,
+        allow_headers=["Content-Type", "Authorization"],
+        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     )
 
     from app.routes.auth_routes import auth_bp
