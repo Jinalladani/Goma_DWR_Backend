@@ -30,13 +30,13 @@ def create_app():
 
     CORS(
         app,
-        resources={r"/*": {"origins": [
+        origins=[
             "https://goma-dwr-frontend.onrender.com",
-            "http://localhost:5173",
-        ]}},
-        supports_credentials=True,
+            "http://localhost:5173"
+        ],
+        methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["Content-Type", "Authorization"],
-        methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+        supports_credentials=True,
     )
 
     from app.routes.auth_routes import auth_bp
