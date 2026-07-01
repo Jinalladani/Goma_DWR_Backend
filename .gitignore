@@ -1,0 +1,43 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Flask
+instance/
+.webassets-cache/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+*.log
+logs/
+
+# SQLite databases
+*.db
+*.sqlite3
+
+# Uploaded files (if applicable)
+uploads/
+media/
+temp/
+tmp/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
